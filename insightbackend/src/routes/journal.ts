@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 
-
 export const journalRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
@@ -10,12 +9,12 @@ export const journalRouter = new Hono<{
   };
   Variables:{
     newJournal : string;
+    journal : string;
   }
 }>()
 
 journalRouter.use("/*",async(c,next)=>{
   const journal = await c.req.json();
-  //@ts-ignore
   c.set("newJournal",journal);
   await next();
 })
