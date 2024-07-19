@@ -9,23 +9,25 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+
 model User {
-  id      String @id @default(cuid()) @map("_id")
-  email  String @unique
+  id       String      @id @default(uuid())
+  email    String   @unique
   password String
-  date   DateTime @default(now())
-  posts Journal[]
+  date     DateTime @default(now())
+  posts    Journal[]
 }
 
 model Journal {
-  id      String @id @default(cuid()) @map("_id")
-  title     String
-  journal   String
-  date      DateTime
-  author    User @relation(fields: [authorId], references: [id])
-  authorId  String
+  id       Int      @id @default(autoincrement())
+  title    String
+  journal  String
+  date     DateTime
+  author   User     @relation(fields: [authorId], references: [id])
+  authorId String
 }
+
