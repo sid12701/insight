@@ -31,3 +31,4 @@ model Journal {
   authorId String
 }
 
+
