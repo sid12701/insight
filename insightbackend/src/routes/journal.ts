@@ -20,7 +20,17 @@ export async function processJournalWithAI(
   journal: string,
   ai: Ai
 ): Promise<string> {
-  const prompt = `You are a friendly journalling assistant whose job is to create insights from the user's journal entry. Do not ask more questions, just use the given entry to create insights and tell the user about the insights. Give the insights in bullet points. Here is the journal entry: ${journal}`;
+  const prompt = `As an empathetic and insightful AI journaling assistant, your task is to analyze the following journal entry and provide meaningful insights. Focus on:
+
+  1. Emotional patterns and underlying themes
+  2. Personal growth opportunities
+  3. Potential actions or reflections that could benefit the user
+  
+  Present your insights in a clear, bulleted format. Be supportive and constructive in your analysis. Here's the journal entry:
+  
+  ${journal}
+  
+  Based on this entry, provide 3-5 bullet points of insights, each followed by a brief explanation.`  
   const response = await ai.run("@cf/meta/llama-3-8b-instruct", {
     stream: true,
     prompt,

@@ -4,6 +4,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from "hono/jwt";
 import {userRouter} from "./routes/user"
 import {journalRouter} from "./routes/journal"
+import {chatRouter} from "./routes/chat"
 
 
 const app = new Hono<{
@@ -16,6 +17,7 @@ const app = new Hono<{
 
 app.route("/api/v1/user", userRouter)
 app.route("/api/v1/journal", journalRouter)
+app.route("/api/v1/chat", chatRouter )
 
 
 

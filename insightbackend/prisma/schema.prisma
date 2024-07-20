@@ -18,6 +18,7 @@ model User {
   id       String      @id @default(uuid())
   email    String   @unique
   password String
+  chatSessions ChatSession[]
   date     DateTime @default(now())
   posts    Journal[]
 }
@@ -31,4 +32,19 @@ model Journal {
   authorId String
 }
 
+model ChatSession {
+  id       String      @id @default(uuid())
+  user     User        @relation(fields: [userId], references: [id])
+  userId   String
+  messages ChatMessages[]  
+}
+
+model ChatMessages {
+  id String @id @default(uuid())
+  session ChatSession @relation(fields:[sessionId], references: [id])
+  sessionId String
+  role String
+  message String
+  createdAt DateTime @default(now())
+}
 
