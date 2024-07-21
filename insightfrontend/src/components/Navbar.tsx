@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Logo from '../assets/meditate-logo.png';
+import { ModeToggle } from './mode-toggle';
 const Navbar = () =>{
+    
     const navbarTextClass = `hover:scale-110 transition transform duration-200 ease-in-out px-3 py-2 rounded`;
   
     return (
@@ -19,7 +21,7 @@ const Navbar = () =>{
               <Link to="#" className={navbarTextClass} onClick={handleLogout}>Logout</Link>
             )} */}
             <Link to="/register" className={navbarTextClass}>Register</Link>
-            {/* <ModeToggle /> */}
+            <ModeToggle />
           </div>
         </div>
       </nav>
