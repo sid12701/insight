@@ -1,4 +1,4 @@
-name = "insightdbackend"
+name = "insightbackend"
 compatibility_date = "2024-07-18"
 
 [vars]
