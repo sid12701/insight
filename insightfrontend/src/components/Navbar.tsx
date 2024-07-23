@@ -15,12 +15,8 @@ const Navbar = () =>{
             <Link to="/viewjournal" className={navbarTextClass}>View My Journals</Link>
           </div>
           <div className="flex space-x-4">
-            {/* {!token ? (
-              <Link to="/login" className={navbarTextClass}>Login</Link>
-            ) : (
-              <Link to="#" className={navbarTextClass} onClick={handleLogout}>Logout</Link>
-            )} */}
             <Link to="/register" className={navbarTextClass}>Register</Link>
+            <Link to="/login" className={navbarTextClass}>Login</Link>
             <ModeToggle />
           </div>
         </div>

@@ -1,8 +1,11 @@
 import {atom} from 'recoil';
 
-export const dateState = atom({
+
+type ModalState = boolean;
+
+export const dateState = atom<Date>({
     key: "dateState",
-    default: undefined,
+    default:new Date(),
 })
 
 export const loadingState = atom({
@@ -27,8 +30,12 @@ export const journalState = atom({
   });
 
 
+export const aiInsightsState = atom({
+    key:'aiInsightsState',
+    default:""
+})
 
-export const modalState = atom({
-    key:'modalState',
-    default:false
+export const aiInsight = atom({
+    key: 'aiInsight',
+    default: false
 })

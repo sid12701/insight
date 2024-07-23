@@ -41,6 +41,7 @@ export default function Component() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="border-blue-500 focus:border-blue-700 focus:ring-blue-700" 
           />
         </div>
         <div className="space-y-2">
@@ -51,6 +52,7 @@ export default function Component() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="border-blue-500 focus:border-blue-400 focus:ring-blue-700"
           />
         </div>
         <Button className="w-full" onClick={handleSubmit}>
