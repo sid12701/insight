@@ -16,28 +16,6 @@ export const journalRouter = new Hono<{
   };
 }>();
 
-export async function processJournalWithAI(
-  journal: string,
-  ai: Ai
-): Promise<string> {
-  const prompt = `As an empathetic and insightful AI journaling assistant, your task is to analyze the following journal entry and provide meaningful insights. Focus on:
-
-  1. Emotional patterns and underlying themes
-  2. Personal growth opportunities
-  3. Potential actions or reflections that could benefit the user
-  
-  Present your insights in a clear, bulleted format. Be supportive and constructive in your analysis. Here's the journal entry:
-  
-  ${journal}
-  
-  Based on this entry, provide 3-5 bullet points of insights, each followed by a brief explanation.`  
-  const response = await ai.run("@cf/meta/llama-3-8b-instruct", {
-    stream: true,
-    prompt,
-  });
-  //@ts-ignore
-  return response;
-}
 
 journalRouter.use("/*", async (c, next) => {
   const journal = await c.req.json();
@@ -65,7 +43,7 @@ journalRouter.use("/*", async (c, next) => {
 
 journalRouter.post("/", async (c) => {
   const body = await c.req.json();
-  const { journal, title, date } = body;
+  const { journal, title, date ,insight} = body;
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -77,6 +55,7 @@ journalRouter.post("/", async (c) => {
         title,
         authorId: userId,
         date,
+        insight
       },
     });
 
@@ -89,14 +68,29 @@ journalRouter.post("/", async (c) => {
 });
 
 journalRouter.post("/ai", async (c) => {
-  const newJournal = c.get("journal");
-  //@ts-ignore
-  const journal = newJournal.journal;
+  const body = await c.req.json();
+  console.log(body)
+  const {journal} = body
+  console.log(journal);
+  // console.log(journal)
   const ai = c.env.AI;
-
   try {
-    const insights = await processJournalWithAI(journal, ai);
-    return c.json({ message: "Insights generated", insights });
+    const prompt = `As an empathetic and insightful AI journaling assistant, your task is to analyze the following journal entry and provide meaningful insights. Focus on:
+
+    1. Emotional patterns and underlying themes
+    2. Personal growth opportunities
+    3. Potential actions or reflections that could benefit the user
+    
+    Present your insights in a clear, bulleted format. Be supportive and constructive in your analysis. Here's the journal entry:
+    
+    ${journal}
+    
+    Based on this entry, provide 3-5 bullet points of insights, each followed by a small explanation`  
+    const insights = await ai.run("@cf/meta/llama-3-8b-instruct", {
+      prompt,
+    });
+    console.log(insights)
+    return c.json({ insights });
   } catch (error) {
     console.error("Error processing journal with AI:", error);
     return c.json({ error: "Failed to process journal" }, 500);

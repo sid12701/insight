@@ -1,11 +1,12 @@
 "use client";
-
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-export default function Component() {
+import Cookie from "js-cookie";
+
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const user = {
@@ -15,9 +16,11 @@ export default function Component() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "https://insightbackend.siddhantdaryanani.workers.dev/api/v1/user/login",user
+        "http://127.0.0.1:8787/api/v1/user/login",user
       );
-      console.log(response.data);
+      let userLoggedIn = response.data;
+      const token = userLoggedIn.token
+      Cookie.set('token',token)
     } catch (e) {
       console.log(e);
     }

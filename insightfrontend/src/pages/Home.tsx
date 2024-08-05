@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import { HammerIcon, LightbulbIcon, PenToolIcon } from "lucide-react";
 import AnimatedDiv from "@/components/animated-div";
 
+
 const Home = () => {
     const navigate = useNavigate();
   const words = [
@@ -60,9 +61,9 @@ const Home = () => {
           </p>
         </AnimatedDiv>
       </div>
-
-    </main>
+     </main>
   );
+
 };
 
 export default Home;

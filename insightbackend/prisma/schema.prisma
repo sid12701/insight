@@ -27,6 +27,7 @@ model Journal {
   id       Int      @id @default(autoincrement())
   title    String
   journal  String
+  insight String?
   date     DateTime
   author   User     @relation(fields: [authorId], references: [id])
   authorId String
