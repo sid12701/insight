@@ -8,6 +8,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Register from "./pages/Register";
 import Login from './pages/Login'
+import Viewjournals from "./pages/ViewJournals";
+import SingleJournal from "./pages/SingleJournal";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <Route path="/journal" element={<Journal />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/viewjournal" element={<Viewjournals />} />
+            <Route path="/viewjournal/:id" element={<SingleJournal />} />
           </Routes>
         </Layout>
       </BrowserRouter>

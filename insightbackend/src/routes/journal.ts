@@ -17,11 +17,11 @@ export const journalRouter = new Hono<{
 }>();
 
 
-journalRouter.use("/*", async (c, next) => {
-  const journal = await c.req.json();
-  c.set("journal", journal);
-  await next();
-});
+// journalRouter.use("/*", async (c, next) => {
+//   const journal = await c.req.json();
+//   c.set("journal", journal);
+//   await next();
+// });
 
 journalRouter.use("/*", async (c, next) => {
   const authHeader = c.req.header("Authorization");
@@ -115,6 +115,7 @@ journalRouter.get("/", async (c) => {
     return c.json({ message: "Error while fetching journal" });
   }
 });
+
 
 journalRouter.get("/:id", async (c) => {
   try {

@@ -29,3 +29,13 @@ export function formatDate(dateStr : string) {
   return `${day}${getOrdinalIndicator(day)} ${month} ${year}`;
 }
 
+
+
+
+export function  truncateTo10Words (text: string)  {
+  const words = text.split(/\s+/); 
+  if (words.length > 10) {
+    return words.slice(0, 10).join(" ") + "..."; 
+  }
+  return text;
+};
