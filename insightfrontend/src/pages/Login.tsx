@@ -18,8 +18,6 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-
-
   const user = {
     email,
     password,
@@ -44,7 +42,7 @@ export default function Login() {
     setButtonDisabled(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8787/api/v1/user/login",
+        " https://insightbackend.siddhantdaryanani.workers.dev/api/v1/user/login",
         user
       );
       let userLoggedIn = response.data;

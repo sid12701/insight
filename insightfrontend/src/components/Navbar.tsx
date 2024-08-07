@@ -3,10 +3,12 @@ import Logo from '../assets/meditate-logo.png';
 import { ModeToggle } from './mode-toggle';
 import Cookie from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { useToast } from './ui/use-toast';
 
 const Navbar = () =>{
   const [isLoggedIn,  setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
     const navbarTextClass = `hover:scale-110 transition transform duration-200 ease-in-out px-3 py-2 rounded dark:text-white`;
     useEffect(() => {
@@ -17,6 +19,11 @@ const Navbar = () =>{
   const handleLogout = () => {
     Cookie.remove('token');
     setIsLoggedIn(false);
+    toast({
+      title: "Success",
+      description: "Logged out",
+      duration: 3000,
+    });
     navigate('/'); 
 };
 

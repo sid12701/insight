@@ -23,6 +23,7 @@
   import { Card, CardHeader, CardContent } from "../components/ui/card";
   import Cookie from 'js-cookie';
   import { useNavigate } from 'react-router-dom';
+import { useToast } from "@/components/ui/use-toast";
 
   const Journal: React.FC = () => {
     const [date, setDate] = useRecoilState(dateState);
@@ -32,6 +33,8 @@
     const [buttonState, setButtonState] = useRecoilState(buttonDisabledState);
     const [aiState, setAiState] = useRecoilState(aiInsight);
     const navigate = useNavigate();
+    const { toast } = useToast();
+
     // const handleDateSelect = (selectedDate: Date | undefined) => {
     //   setDate(selectedDate);
     // };
@@ -55,7 +58,7 @@
         setLoadState(true)
         setButtonState(true)
       const response = await axios.post(
-        "http://127.0.0.1:8787/api/v1/journal/ai",
+        " https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal/ai",
         newJournal, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,10 +90,15 @@
       try{
         setLoadState(true);
         setButtonState(true);
-        const response = await axios.post('http://127.0.0.1:8787/api/v1/journal',journalEntry,{
+        const response = await axios.post(' https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal',journalEntry,{
           headers: {
             Authorization: `Bearer ${token}`,
           }});
+          toast({
+            title: "Success",
+            description: "Journalled Succesfully",
+            duration: 3000,
+          });
         console.log(response)
       }
       catch(e){

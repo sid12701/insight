@@ -17,9 +17,10 @@ const SingleJournal = () => {
   const token = Cookie.get("token");
   const [journal, setJournal] = useState<Journal>({});
   const { id } = useParams();
+
   const getJournalById = async () => {
     const response = await axios.get(
-      `http://127.0.0.1:8787/api/v1/journal/${id}`,
+      ` https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,35 +29,33 @@ const SingleJournal = () => {
     );
     setJournal(response.data.journal);
   };
+
   useEffect(() => {
     getJournalById();
   }, []);
 
   const formatInsight = (insight: string) => {
-    const formattedInsight = insight.split("\n").map((line, index) => {
-      line = line.replace(/\*\*/g, "");
+    if (!insight) return null;
 
-      if (line.startsWith("•")) {
-        return (
-          <React.Fragment key={index}>
-            <br />
-            <span className="flex">
-              <span className="mr-2">•</span>
-              <span>{line.slice(1).trim()}</span>
-            </span>
-          </React.Fragment>
-        );
-      }
+    const removeAsterisks = (text: string) => text.replace(/\*\*/g, '');
+
+    const lines = insight.split('• ');
+    return lines.map((line, index) => {
+      if (index === 0) return <p key={index} className="mb-2">{removeAsterisks(line.trim())}</p>;
       return (
-        <React.Fragment key={index}>
-          {line}
-          <br />
-        </React.Fragment>
+        <div key={index} className="mb-2">
+          <span className="mr-2">•</span>
+          {removeAsterisks(line.trim()).split('\n').map((subLine, subIndex) => (
+            <React.Fragment key={`${index}-${subIndex}`}>
+              {subLine}
+              {subIndex < removeAsterisks(line.trim()).split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </div>
       );
     });
-
-    return formattedInsight;
   };
+
   return (
     <div className="max-w-4xl mx-auto p-5">
       <h1 className="text-2xl font-semibold text-center mb-4">
@@ -68,9 +67,9 @@ const SingleJournal = () => {
       <p className="text-base text-gray-700 mb-3 dark:text-white">
         {journal.journal}
       </p>
-      <p className="text-gray-600 dark:text-white">
-        {journal.insight}
-      </p>
+      <div className="text-gray-600 dark:text-white">
+        {formatInsight(journal.insight!)}
+      </div>
     </div>
   );
 };

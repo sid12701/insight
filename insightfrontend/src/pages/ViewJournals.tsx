@@ -29,7 +29,7 @@ const Viewjournals = () => {
       },[token])  
     const getJournals = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8787/api/v1/journal', {
+            const response = await axios.get(' https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json'

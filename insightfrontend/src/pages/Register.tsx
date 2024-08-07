@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { registerInput } from "../../../common/src/index"; 
+import { useNavigate} from 'react-router-dom';
+
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -12,6 +14,8 @@ export default function Register() {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [errors, setErrors] = useState({ email: "", password: "" });
   const { toast } = useToast();
+  const navigate = useNavigate();
+
 
   const user = {
     email,
@@ -37,7 +41,7 @@ export default function Register() {
     setButtonDisabled(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8787/api/v1/user/register",
+        " https://insightbackend.siddhantdaryanani.workers.dev/api/v1/user/register",
         user
       );
       toast({
@@ -45,6 +49,7 @@ export default function Register() {
         description: "User registered successfully!",
         duration: 3000,
       });
+      navigate("/login")
       console.log(response.data);
     } catch (e) {
       console.log(e);
