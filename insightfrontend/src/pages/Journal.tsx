@@ -1,4 +1,4 @@
-  import React from "react";
+  import React, { useEffect } from "react";
   import {
     buttonDisabledState,
     dateState,
@@ -22,6 +22,7 @@
   import { CardTitle } from "@/components/ui/card";
   import { Card, CardHeader, CardContent } from "../components/ui/card";
   import Cookie from 'js-cookie';
+  import { useNavigate } from 'react-router-dom';
 
   const Journal: React.FC = () => {
     const [date, setDate] = useRecoilState(dateState);
@@ -30,12 +31,22 @@
     const [loadState, setLoadState] = useRecoilState(loadingState);
     const [buttonState, setButtonState] = useRecoilState(buttonDisabledState);
     const [aiState, setAiState] = useRecoilState(aiInsight);
+    const navigate = useNavigate();
     // const handleDateSelect = (selectedDate: Date | undefined) => {
     //   setDate(selectedDate);
     // };
 
     const token = Cookie.get('token')
+    const redirectToLogin = ()=>{
+      if(!token){
+        navigate('/login')
+      }
+    }
 
+    useEffect(()=>{
+      redirectToLogin()
+    },[token])
+    
     const generateAiInsight = async () => {
       const newJournal = {
         journal: journal.journal,

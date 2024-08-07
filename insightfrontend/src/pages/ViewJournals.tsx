@@ -3,6 +3,7 @@ import axios from 'axios'
 import Cookie from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { truncateTo10Words } from '@/lib/utils'
+import { useNavigate } from 'react-router-dom';
 
 interface Journal {
     title: string;
@@ -15,8 +16,17 @@ interface Journal {
 const Viewjournals = () => {
     const [journals, setJournals] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
     const token = Cookie.get('token')
-    
+    const redirectToLogin = ()=>{
+        if(!token){
+          navigate('/login')
+        }
+      }
+  
+      useEffect(()=>{
+        redirectToLogin()
+      },[token])  
     const getJournals = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8787/api/v1/journal', {

@@ -33,7 +33,7 @@ userRouter.post("/register", async (c) => {
         if (existingUser) {
             c.status(409)
             return c.json({ message: "User already exists" })
-        }
+        } 
         const user = await prisma.user.create({
             data: {
                 email,

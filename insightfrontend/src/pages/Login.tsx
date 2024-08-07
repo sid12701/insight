@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import Cookie from "js-cookie";
 import { signInInput } from "../../../common/src/index";
+import { useNavigate,useLocation } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,10 @@ export default function Login() {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [errors, setErrors] = useState({ email: "", password: "" });
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+
 
   const user = {
     email,
@@ -52,6 +57,10 @@ export default function Login() {
         description: "Login successful!",
         duration: 3000,
       });
+
+      // Redirect logic
+      const origin = location.state?.from?.pathname || "/";
+      navigate(origin);
     } catch (e) {
       console.log(e);
       toast({
@@ -61,8 +70,11 @@ export default function Login() {
         variant: "destructive",
         duration: 3000,
       });
+    } finally {
+      setButtonDisabled(false);
     }
   };
+
 
   useEffect(() => {
     setButtonDisabled(!(user.email && user.password));
