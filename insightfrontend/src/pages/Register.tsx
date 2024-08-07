@@ -4,8 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { registerInput } from "../../../common/src/index"; 
+import Cookie from 'js-cookie'
+// import { registerInput } from "../../../common/src/index"; 
 import { useNavigate} from 'react-router-dom';
+import z from 'zod';
+
+const registerInput = z.object({
+  email: z.string().email(),
+  password: z.string(),  
+});
 
 
 export default function Register() {
@@ -49,7 +56,8 @@ export default function Register() {
         description: "User registered successfully!",
         duration: 3000,
       });
-      navigate("/login")
+      Cookie.set('token', response.data.token)
+      navigate("/")
       console.log(response.data);
     } catch (e) {
       console.log(e);

@@ -1,7 +1,6 @@
 import {atom} from 'recoil';
 
 
-type ModalState = boolean;
 
 export const dateState = atom<Date>({
     key: "dateState",

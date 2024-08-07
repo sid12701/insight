@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -6,8 +5,14 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import Cookie from "js-cookie";
-import { signInInput } from "../../../common/src/index";
+import z from 'zod';
+
 import { useNavigate,useLocation } from 'react-router-dom';
+
+const signInInput = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),});
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -22,6 +27,8 @@ export default function Login() {
     email,
     password,
   };
+
+  const from = location.state?.from?.pathname || "/";
 
   const validateInput = () => {
     const result = signInInput.safeParse(user);
@@ -55,10 +62,7 @@ export default function Login() {
         description: "Login successful!",
         duration: 3000,
       });
-
-      // Redirect logic
-      const origin = location.state?.from?.pathname || "/";
-      navigate(origin);
+      navigate(from, { replace: true });
     } catch (e) {
       console.log(e);
       toast({
