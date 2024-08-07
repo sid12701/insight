@@ -69,7 +69,7 @@ const SingleJournal = () => {
         {journal.journal}
       </p>
       <p className="text-gray-600 dark:text-white">
-        {formatInsight(journal.insight!)}
+        {journal.insight}
       </p>
     </div>
   );

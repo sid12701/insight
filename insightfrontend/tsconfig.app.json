@@ -31,7 +31,7 @@
     }
 
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/lib/utils.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/lib/utils.ts","../common/src"],
 
   "exclude": ["src/test-setup.ts", "src/setupTests.ts"]
 }

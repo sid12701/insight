@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Login from './pages/Login'
 import Viewjournals from "./pages/ViewJournals";
 import SingleJournal from "./pages/SingleJournal";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/viewjournal" element={<Viewjournals />} />
             <Route path="/viewjournal/:id" element={<SingleJournal />} />
+            <Route path="/chat" element={<Chat />} />
           </Routes>
         </Layout>
       </BrowserRouter>

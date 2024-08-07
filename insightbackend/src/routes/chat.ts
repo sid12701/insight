@@ -84,6 +84,10 @@ const getOrCreateChatSession = async(prisma:PrismaClient, userId:string)=>{
     return activeSession;
 }
 
+const getSpecificMonthJournals = async(prisma: PrismaClient)=>{
+    
+}
+
 chatRouter.post("/",async(c)=>{
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
