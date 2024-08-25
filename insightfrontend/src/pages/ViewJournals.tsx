@@ -14,14 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { CalendarIcon, ArrowRightIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookie from "js-cookie";
 import { truncateTo10Words } from "@/lib/utils";
 
-export default function Component() {
+export default function viewjournals() {
   const [selectedMonth, setSelectedMonth] = useState<string>(
     (new Date().getMonth() + 1).toString() // +1 to match 1-12 range
   );
@@ -73,8 +71,6 @@ export default function Component() {
     const day = date.getDate();
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
-  
-    // Determine the ordinal suffix
     let suffix = "th";
     if (day === 1 || day === 21 || day === 31) {
       suffix = "st";
