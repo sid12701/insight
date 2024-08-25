@@ -152,7 +152,6 @@ journalRouter.get("/:id", async (c) => {
 // });
 
 journalRouter.get("/month/:year/:month", async (c) => {
-  console.log("Month")
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
