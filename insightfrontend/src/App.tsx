@@ -12,13 +12,18 @@ import Viewjournals from "./pages/ViewJournals";
 import SingleJournal from "./pages/SingleJournal";
 import Chat from "./pages/Chat";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ThemeProvider } from "./components/theme-provider";
+import Navbar from "./components/Navbar";
+import { Toaster } from "./components/ui/toaster";
+import TestChatComponent from "./pages/TestChat";
 
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <RecoilRoot>
         <BrowserRouter>
-          <Layout>
+          <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+          <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
@@ -55,12 +60,23 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/testchat"
+                element={
+                  <ProtectedRoute>
+                    <TestChatComponent />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
-          </Layout>
+            <Toaster />
+            </ThemeProvider>
         </BrowserRouter>
       </RecoilRoot>
     </LocalizationProvider>
   );
 }
+
+
 
 export default App;

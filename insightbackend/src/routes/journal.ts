@@ -69,10 +69,7 @@ journalRouter.post("/", async (c) => {
 
 journalRouter.post("/ai", async (c) => {
   const body = await c.req.json();
-  console.log(body)
   const {journal} = body
-  console.log(journal);
-  // console.log(journal)
   const ai = c.env.AI;
   try {
     const prompt = `As an empathetic and insightful AI journaling assistant, your task is to analyze the following journal entry and provide meaningful insights. Focus on:
@@ -137,20 +134,60 @@ journalRouter.get("/:id", async (c) => {
   }
 });
 
-journalRouter.get("/date", async (c) => {
+// journalRouter.get("/month", async (c) => {
+//   try {
+//     const prisma = new PrismaClient({
+//       datasourceUrl: c.env.DATABASE_URL,
+//     }).$extends(withAccelerate());
+//     const month = c.req.param()
+//     const userId = c.get("userId");
+//     const journal = await prisma.journal.findMany({
+//       where: { date: date , authorId: userId},
+//     });
+//     return c.json({ journal });
+//   } catch (e) {
+//     console.log(e);
+//     return c.json({ message: "Error while fetching journal" });
+//   }
+// });
+
+journalRouter.get("/month/:year/:month", async (c) => {
+  console.log("Month")
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
-    const body = await c.req.json();
+    const year = parseInt(c.req.param('year'))
+    const month = parseInt(c.req.param('month')) - 1; 
     const userId = c.get("userId");
-    const { date } = body;
-    const journal = await prisma.journal.findMany({
-      where: { date: date , authorId: userId},
+
+    if (isNaN(year) || isNaN(month) || month < 0 || month > 11) {
+       c.status(400)
+       return c.json({ error: "Invalid year or month" });
+    }
+
+    // Calculate the first day of the selected month
+    const firstDayOfMonth = new Date(year, month, 1);
+    
+    // Calculate the first day of the next month
+    const firstDayOfNextMonth = new Date(year, month + 1, 1);
+
+    const journals = await prisma.journal.findMany({
+      where: {
+        date: {
+          gte: firstDayOfMonth,
+          lt: firstDayOfNextMonth
+        },
+        authorId: c.get('userId')
+      },
+      orderBy: {
+        date: 'desc'
+      }
     });
-    return c.json({ journal });
-  } catch (e) {
-    console.log(e);
-    return c.json({ message: "Error while fetching journal" });
+    return c.json({ journals });
+  } catch (error) {
+    console.error("Error fetching monthly journals:", error);
+     c.status(500)
+   return c.json({ error: "Internal server error" });
   }
 });

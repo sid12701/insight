@@ -49,7 +49,7 @@ export default function Login() {
     setButtonDisabled(true);
     try {
       const response = await axios.post(
-        " https://insightbackend.siddhantdaryanani.workers.dev/api/v1/user/login",
+        "https://insightbackend.siddhantdaryanani.workers.dev/api/v1/user/login",
         user
       );
       let userLoggedIn = response.data;

@@ -58,7 +58,7 @@ import { useToast } from "@/components/ui/use-toast";
         setLoadState(true)
         setButtonState(true)
       const response = await axios.post(
-        " https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal/ai",
+        "https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal/ai",
         newJournal, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,9 +88,10 @@ import { useToast } from "@/components/ui/use-toast";
       };
       console.log(journalEntry)
       try{
+        // http://localhost:8787/api/v1/chat/messages/
         setLoadState(true);
         setButtonState(true);
-        const response = await axios.post(' https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal',journalEntry,{
+        const response = await axios.post('https://insightbackend.siddhantdaryanani.workers.dev/api/v1/journal',journalEntry,{
           headers: {
             Authorization: `Bearer ${token}`,
           }});
